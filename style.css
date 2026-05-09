@@ -1,0 +1,339 @@
+/* 1. TYPOGRAPHY & VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --accent: #00f2ff; /* Default Cyber Cyan */
+    --bg-deep: #020617;
+    --bg-sidebar: #0f172a;
+    --glass: rgba(30, 41, 59, 0.6);
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+}
+
+/* CHARACTER THEMES - These update automatically via JS */
+.theme-bot { --accent: #00f2ff; }
+.theme-uncle { --accent: #fbbf24; }
+.theme-doctor { --accent: #0ea5e9; }
+.theme-islamic { --accent: #10b981; }
+
+/* 2. GLOBAL RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    /* This makes every color change smooth and professional */
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, color 0.3s ease;
+}
+
+body {
+    background: var(--bg-deep);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden; /* Stops the whole page from scrolling */
+}
+
+/* 3. LAYOUT STRUCTURE */
+.app-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* 4. SIDEBAR STYLING */
+.sidebar {
+    width: 280px;
+    background: var(--bg-sidebar);
+    padding: 25px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    color: var(--accent);
+}
+
+.logo span {
+    color: var(--text-dim);
+    font-weight: 400;
+}
+
+.persona-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.char-btn {
+    width: 100%;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-dim);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.char-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.char-btn.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.navbar {
+    padding: 15px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 3px solid var(--accent); /* Thin color line at the top */
+}
+
+.active-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar-md {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    padding: 2px;
+}
+
+.history-toggle {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.history-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.clear-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ff4b2b; /* Red color for warning */
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 10px;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 75, 43, 0.1);
+    border-color: #ff4b2b;
+    transform: scale(1.1);
+}
+
+/* 5. MAIN CHAT CONTENT - Keep your look */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* We keep your gradient but make it subtle */
+    background-image: radial-gradient(circle at top right, rgba(0,0,0,0), rgba(0,0,0,0.2));
+    position: relative;
+}
+
+/* 6. CHAT DISPLAY - FIX THE CLIPPING */
+.chat-display {
+    flex: 1;
+    /* This 100px is the "magic" fix for the fading/hiding issue */
+    padding: 30px 40px 100px 40px; 
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Makes scrolling feel premium */
+    scroll-behavior: smooth;
+}
+/* Message Entry Animation */
+@keyframes messageIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    animation: messageIn 0.3s ease-out forwards;
+}
+
+.bot-msg {
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    padding: 14px 18px;
+    border-radius: 18px 18px 18px 4px; /* Curved except bottom-left */
+    max-width: 70%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--accent);
+    line-height: 1.5;
+}
+
+.user-msg-bubble {
+    background: var(--accent);
+    color: #020617; /* Dark text for contrast */
+    padding: 14px 18px;
+    border-radius: 18px 18px 4px 18px; /* Curved except bottom-right */
+    align-self: flex-end;
+    font-weight: 600;
+    max-width: 70%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 7. INPUT AREA */
+.input-container {
+    padding: 25px 40px;
+    background: var(--bg-sidebar);
+    display: flex;
+    gap: 15px;
+}
+
+input {
+    flex: 1;
+    padding: 14px 25px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1e293b;
+    color: white;
+    outline: none;
+    font-size: 1rem;
+}
+
+input:focus {
+    border-color: var(--accent);
+}
+
+.send-btn {
+    background: var(--accent);
+    border: none;
+    padding: 0 25px;
+    border-radius: 30px;
+    color: #020617;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--accent);
+}
+.icon-btn {
+    background: rgba(255, 255, 255, 0.05); /* Darker glass */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--accent);
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+.icon-btn:hover {
+    background: var(--accent);
+    color: #020617;
+    box-shadow: 0 0 15px var(--accent);
+    transform: translateY(-2px);
+}
+/* Pulse animation for listening mic */
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 75, 43, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
+}
+
+.icon-btn.listening {
+    animation: pulse-red 1.5s infinite;
+    border-color: #ff4b2b !important;
+}
+
+/* 8. HISTORY DRAWER */
+.history-drawer {
+    position: fixed;
+    right: -320px; /* Fully hidden */
+    top: 0;
+    width: 320px;
+    height: 100%;
+    background: var(--bg-sidebar);
+    border-left: 2px solid var(--accent);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    z-index: 1000;
+    padding: 30px;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.history-drawer.open {
+    right: 0; /* Slides in */
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+.speak-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 10px;
+    opacity: 0.5;
+    transition: 0.3s;
+    vertical-align: middle;
+}
+
+.speak-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Ensure the bot message allows the button to stay inline */
+.bot-msg {
+    position: relative;
+    padding-right: 35px; /* Space for the button */
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }

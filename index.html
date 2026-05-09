@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PersonaPath AI | Digital Majlis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="theme-bot"> <!-- Default Theme -->
+    
+
+    <div class="app-wrapper">
+        
+        <!-- SIDEBAR (LEFT): Characters -->
+        <aside class="sidebar">
+            <h2 class="logo">PersonaPath<span>AI</span></h2>
+            <div class="persona-list">
+                <button class="char-btn active" onclick="changeCharacter('Bot')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="avatar-sm">
+                    <span>System Core</span>
+                </button>
+                <button class="char-btn" onclick="changeCharacter('Uncle')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4333/4333609.png" class="avatar-sm">
+                    <span>Uncle</span>
+                </button>
+                <button class="char-btn" onclick="changeCharacter('Doctor')">
+        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" class="avatar-sm">
+        <span>Doctor</span>
+    </button>
+                <button class="char-btn" onclick="changeCharacter('Islamic')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2822/2822557.png" class="avatar-sm">
+        <span>Islamic Scholar</span>
+    </button>
+            </div>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <main class="main-content">
+            <nav class="navbar">
+                <div class="active-profile">
+                    <img id="header-avatar" src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="avatar-md">
+                    <div>
+                        <h3 id="current-character-name">System Core</h3>
+                        <small id="current-status">Online</small>
+                    </div>
+                </div>
+                <button class="history-toggle" onclick="toggleHistory()">🕒 History</button>
+            </nav>
+
+            <div id="chat-box" class="chat-display">
+                <!-- Messages appear here -->
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="user-msg" placeholder="Type a message or mood...">
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+                <button id="mic-btn" class="icon-btn" onclick="startListening()">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+            </div>
+        </main>
+
+        <!-- HISTORY (RIGHT) -->
+        <div id="history-drawer" class="history-drawer">
+            <div class="drawer-header">
+                <h3>Chat History</h3>
+                <!-- Added a Trash Icon button -->
+    <button onclick="clearHistory()" class="clear-btn">
+        <i class="fa-solid fa-trash-can"></i>
+    </button>
+                <button onclick="toggleHistory()">×</button>
+            </div>
+            <div id="history-list"></div>
+        </div>
+
+    </div>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
